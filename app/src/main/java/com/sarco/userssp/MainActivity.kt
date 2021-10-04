@@ -25,7 +25,9 @@ class MainActivity : AppCompatActivity() {
 
         //igualamos el adapter instanciado previamente, le entregamos un listado, el cual
         //es requerido por la clase adapter UserAdapter.
-        userAdapter = UserAdapter(mutableListOf())
+        //UPDATE: le entregamos datos de prueba con la función getUsers para poder visualizar
+        //información en el recyclerView.
+        userAdapter = UserAdapter(getUsers())
         //para poder manejar el layout debemos igualar la variable linearLayoutManager a la clase
         //LinearLayoutMnager entregando el contexto, el cual hara referencia al contexto actual
         //osea this.
@@ -40,5 +42,21 @@ class MainActivity : AppCompatActivity() {
             //nuestra clase adapter
             adapter = userAdapter
         }
+    }
+
+
+    //función que se encarga solo de crear una lista mockup para visualizar datos en el recycler view
+    private fun getUsers(): MutableList<User>{
+        val users = mutableListOf<User>()
+
+        val alain = User(1, "Alain", "Nicolas", "urlGenerica")
+        val carlos = User(2, "Carlos", "Muñoz", "urlGenerica")
+        val pedro = User(3, "Pedro", "Castillo", "urlGenerica")
+
+        users.add(alain)
+        users.add(carlos)
+        users.add(pedro)
+
+        return users
     }
 }
