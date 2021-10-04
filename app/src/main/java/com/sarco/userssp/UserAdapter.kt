@@ -1,5 +1,7 @@
 package com.sarco.userssp
 
+import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,17 +13,41 @@ import com.sarco.userssp.databinding.ItemUserBinding
 //que se creo para este binding
 class UserAdapter(private val users:List<User>) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
 
+    //se indica que la variable se inicializara despues.
+
+    private lateinit var context: Context
+
+
+    //con el atajo CTRL + i podemos acceder a la generación de las funciones del ViewHolder
+    //que deben ser sobreescritas
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("Not yet implemented")
+        context = parent.context
+
+        //esta funcion sirve para inflar la vista.
+        val view = LayoutInflater.from(context).inflate(R.layout.item_user, parent, false)
+
+        //retornamos el ViewHolder que creamos abajo, clase interna, y entregamos la vista inflada
+        //como return.
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
-    }
+        //este metodo se encarga de bindear la información al RecyclerView.
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        //obtenemos la posicion del arreglo con el parametro generado por la función,
+        //este actua similar a un foreach.
+        val user = users[position]
+
+        //holder referencia a ViewHolder, el que generamos y setea dentro de la vista de detalle
+        //el valor para cada elemento.
+        with(holder){
+            binding.tvOrder.text = user.id.toString()
+            binding.tvName.text = user.name
+        }
     }
+    //indica cuantos elementos hay en el adapter.
+    override fun getItemCount(): Int = users.size
+
     //creamos una clase interna, que es el ViewHolder sobreescrito, para ello requiere de un
     //parametro, en este caso la vista donde estara el Recycler View, esta clase debe extender
     //el objeto RecyclerView al cual le entregaremos la vista donde se encontrara el elemento
@@ -29,7 +55,7 @@ class UserAdapter(private val users:List<User>) : RecyclerView.Adapter<UserAdapt
     //elemento que queremos bindear, en este caso ItemUserBinding, es el binding generado para la
     //vista de Item User, que es el elemento a renderizar dentro del listado.
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
-        val binding = ItemUserBinding.bind(view);
+        val binding = ItemUserBinding.bind(view)
     }
 
 
