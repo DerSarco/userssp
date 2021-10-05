@@ -26,10 +26,13 @@
 <!--    La herramiento tools nos ayuda a tener datos estaticos para visualización
         al declararlo no se irá en la versión final.
 -->
+
+<!--    definimos apariencias a los textos con el atributo textAppearance usando el recurso ?attr/-->
     <TextView
         android:id="@+id/tvOrder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceCaption"
         tools:text="1"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,6 +44,7 @@
         android:id="@+id/tvName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceSubtitle2"
         tools:text="Nombre completo"
         android:layout_marginHorizontal="@dimen/common_padding_default"
         app:layout_constraintStart_toEndOf="@id/imgPhoto"
@@ -48,6 +52,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
 
+        />
+
+<!--    creamos un View que funciona como divider, esto para saber donde finaliza la fila-->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/color_divider"
+        app:layout_constraintStart_toStartOf="@id/tvName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
