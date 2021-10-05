@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.sarco.userssp.databinding.ItemUserBinding
 
 //creamos la clase adapter para poder realizar el binding al recycler view que hemos creado,
@@ -41,8 +43,17 @@ class UserAdapter(private val users:List<User>) : RecyclerView.Adapter<UserAdapt
         //holder referencia a ViewHolder, el que generamos y setea dentro de la vista de detalle
         //el valor para cada elemento.
         with(holder){
-            binding.tvOrder.text = user.id.toString()
+            binding.tvOrder.text = (position + 1).toString()
             binding.tvName.text = user.name
+            //cargamos la imagen que llega desde la instancia de la clase en el main.
+            //con Glide seteamos esta imagen en el ImageView que agregamos en la vista
+            Glide.with(context).load(user.url)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .centerCrop()
+//                    con circle crop podemos hacer que las imagenes se recorten circularmente.
+                .circleCrop()
+                .into(binding.imgPhoto)
+
         }
     }
     //indica cuantos elementos hay en el adapter.

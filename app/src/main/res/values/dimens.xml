@@ -3,4 +3,6 @@
     <dimen name="common_padding_min">8dp</dimen>
     <dimen name="common_padding_default">16dp</dimen>
     <dimen name="common_medium_default">24dp</dimen>
+    <dimen name="card_img_size">40dp</dimen>
+    <dimen name="card_height">56dp</dimen>
 </resources>

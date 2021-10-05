@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--el tamaño definido por google para una card es de 56dp, revisar card_height-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/common_padding_default"
+    android:layout_height="@dimen/card_height"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+
+    <ImageView
+        android:id="@+id/imgPhoto"
+        android:layout_width="@dimen/card_img_size"
+        android:layout_height="@dimen/card_img_size"
+        android:contentDescription="@string/description_user_photo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="8dp"
+
+        />
 <!--    La herramiento tools nos ayuda a tener datos estaticos para visualización
         al declararlo no se irá en la versión final.
 -->
@@ -14,6 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="1"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,7 +37,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         tools:text="Nombre completo"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="@dimen/common_padding_default"
+        app:layout_constraintStart_toEndOf="@id/imgPhoto"
         app:layout_constraintEnd_toStartOf="@id/tvOrder"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
