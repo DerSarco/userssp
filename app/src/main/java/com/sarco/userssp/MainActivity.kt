@@ -1,15 +1,14 @@
 package com.sarco.userssp
 
 import android.content.Context
-import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputEditText
 import com.sarco.userssp.databinding.ActivityMainBinding
 /*la actividad que contiene el main activity en este caso, es donde se aloja la lista, por ende
 * debemos extender la actividad al OnClickListener definido por nosotros.*/
@@ -43,18 +42,37 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         //la función commit realiza el insert del dato de manera sincrona.
 
         if(isFirstTime){
-
+            /*inflamos el formulario de registro para poder incrustarlo dentro de nuestro
+            * Dialog.*/
+            val dialogView = layoutInflater.inflate(R.layout.dialog_register, null)
             /*Creamos un Dialog para poder cambiar el valor del dato en Shared Preferences*/
-            MaterialAlertDialogBuilder(this, )
+            MaterialAlertDialogBuilder(this )
                 .setTitle(R.string.dialog_title)
-                .setPositiveButton(R.string.dialog_confirm) { dialogInterface, which ->
+//                        con setView entregamos el layout que queremos usar dentro de nuestro
+//                    AlertDialog
+                .setView(dialogView)
+//                    Cancelable evita que el dialog se quite al tocar fuera de la zona de dialogo
+                .setCancelable(false)
+                .setPositiveButton(R.string.dialog_confirm) { _, _ ->
+                    val username = dialogView.findViewById<TextInputEditText>(R.id.etUserName)
+                        .text.toString()
+                    with(preferences.edit()){
+                      putBoolean(getString(R.string.sp_first_time), false)
+                        putString(getString(R.string.sp_username), username)
+                            .apply()
+                    }
+                    Toast.makeText(this, R.string.register_success, Toast.LENGTH_SHORT).show()
                 /*dentro del positive Button, se al presionarlo el valor del dato cambia a false*/
-                    preferences.edit().putBoolean(getString(R.string.sp_first_time), false).commit()
+
                 }
-                .setNegativeButton("Cancelar", null)
                 .show()
+            /*si el usuario ya existe dentro de las shared preferences le damos la bienvenida
+            * podemos rescatar su nombre desde las shared preferences*/
+        } else {
+            val username = preferences.getString(getString(R.string.sp_username),
+                getString(R.string.hint_username))
 
-
+            Toast.makeText(this, "Bienvendo $username", Toast.LENGTH_SHORT).show()
         }
 
         //igualamos el adapter instanciado previamente, le entregamos un listado, el cual
