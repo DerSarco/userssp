@@ -13,7 +13,11 @@ import com.sarco.userssp.databinding.ItemUserBinding
 //generamos la lista de users de tipo List con tipos internos User, que es la data class creada.
 //posteriormente, la clase se debe extender al Adapter de RecyclerView entregando la clase interna
 //que se creo para este binding
-class UserAdapter(private val users:List<User>) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
+
+//creamos una nueva constante listener, que extendera la interfaz que creamos para el evento de
+//click
+class UserAdapter(private val users:List<User>, private val listener: OnClickListener)
+    : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
 
     //se indica que la variable se inicializara despues.
 
@@ -43,6 +47,8 @@ class UserAdapter(private val users:List<User>) : RecyclerView.Adapter<UserAdapt
         //holder referencia a ViewHolder, el que generamos y setea dentro de la vista de detalle
         //el valor para cada elemento.
         with(holder){
+            /*llamamos al setListener entregando el user bindeado en la lista.*/
+            setListener(user, position+1)
             binding.tvOrder.text = (position + 1).toString()
             //llamamos a la funcion get personalizada de la data class
             binding.tvName.text = user.getFullName()
@@ -68,6 +74,13 @@ class UserAdapter(private val users:List<User>) : RecyclerView.Adapter<UserAdapt
     //vista de Item User, que es el elemento a renderizar dentro del listado.
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         val binding = ItemUserBinding.bind(view)
+
+
+        /*dentro de la clase interna definimos el setListener para el root, se que en el
+        * binding estamos referenciando al elemento de la lista mas no la lista en general*/
+        fun setListener(user: User, position: Int){
+            binding.root.setOnClickListener{ listener.onClick(user, position)}
+        }
     }
 
 

@@ -1,12 +1,17 @@
 package com.sarco.userssp
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sarco.userssp.databinding.ActivityMainBinding
-
-class MainActivity : AppCompatActivity() {
+/*la actividad que contiene el main activity en este caso, es donde se aloja la lista, por ende
+* debemos extender la actividad al OnClickListener definido por nosotros.*/
+class MainActivity : AppCompatActivity(), OnClickListener {
     //creamos 3 variables, una para el userAdapter,
     //otra para el linearLayoutManager
     //otra para el binding, haciendo referencia a la vista
@@ -23,11 +28,23 @@ class MainActivity : AppCompatActivity() {
         //dentro de la vista, seteamos el contenido del binding anterior.
         setContentView(binding.root)
 
+        //con getPreferences obtenemos los datos almacenados dentro de la aplicación,
+        //estas no se puede compartir con las demas aplicaciones, no asi como las
+        // getSharedPreferences
+        val preferences = getPreferences(Context.MODE_PRIVATE)
+        //se inicializa el valor con un valor por defecto, en este caso true y su nombre se define
+        //en un recurso string
+        val isFirstTime = preferences.getBoolean(getString(R.string.sp_first_time), true)
+        Log.i("SP: ", "${getString(R.string.sp_first_time)} = $isFirstTime")
+
         //igualamos el adapter instanciado previamente, le entregamos un listado, el cual
         //es requerido por la clase adapter UserAdapter.
         //UPDATE: le entregamos datos de prueba con la función getUsers para poder visualizar
         //información en el recyclerView.
-        userAdapter = UserAdapter(getUsers())
+        /*en la instancia del adapter, se define un nuevo parametro que hace referencia a la
+        * interfaz de OnClickListener, como la actividad extiende la misma interfaz, con el
+        * la palabra reservada this podemos entregar la interfaz extendida*/
+        userAdapter = UserAdapter(getUsers(), this)
         //para poder manejar el layout debemos igualar la variable linearLayoutManager a la clase
         //LinearLayoutMnager entregando el contexto, el cual hara referencia al contexto actual
         //osea this.
@@ -36,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         //dentro de la vista, tenemos el recyclerview generado, por ende accedemos a el y aplicamos
         //las siguientes variables.
         binding.recyclerView.apply {
+            setHasFixedSize(true)
             //entregamos el layoutmanager que hara referencia a este contexto
             layoutManager = linearLayoutManager
             //entregamos el UserAdapter para que obtenga las funciones y viewholder creados en
@@ -72,5 +90,11 @@ class MainActivity : AppCompatActivity() {
         users.add(emma)
 
         return users
+    }
+
+/*al extender la interfaz, debemos hacer un override de la funcion que esta definida en
+* la interfaz.*/
+    override fun onClick(user: User, position: Int) {
+        Toast.makeText(this, "$position: ${user.getFullName()}" , Toast.LENGTH_SHORT).show()
     }
 }
