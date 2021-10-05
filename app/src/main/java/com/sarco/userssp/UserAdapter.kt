@@ -44,7 +44,8 @@ class UserAdapter(private val users:List<User>) : RecyclerView.Adapter<UserAdapt
         //el valor para cada elemento.
         with(holder){
             binding.tvOrder.text = (position + 1).toString()
-            binding.tvName.text = user.name
+            //llamamos a la funcion get personalizada de la data class
+            binding.tvName.text = user.getFullName()
             //cargamos la imagen que llega desde la instancia de la clase en el main.
             //con Glide seteamos esta imagen en el ImageView que agregamos en la vista
             Glide.with(context).load(user.url)

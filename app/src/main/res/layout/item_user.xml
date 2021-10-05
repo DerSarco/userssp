@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--el tamaño definido por google para una card es de 56dp, revisar card_height-->
+<!--podemos hacer clickeable la row, con las propiedades clickable y focusable-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/card_height"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?attr/selectableItemBackground"
+    >
 
 
     <ImageView
