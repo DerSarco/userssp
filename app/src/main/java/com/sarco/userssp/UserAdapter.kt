@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.sarco.userssp.databinding.ItemUserAltBinding
 import com.sarco.userssp.databinding.ItemUserBinding
 
 //creamos la clase adapter para poder realizar el binding al recycler view que hemos creado,
@@ -30,7 +31,7 @@ class UserAdapter(private val users:List<User>, private val listener: OnClickLis
         context = parent.context
 
         //esta funcion sirve para inflar la vista.
-        val view = LayoutInflater.from(context).inflate(R.layout.item_user, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.item_user_alt, parent, false)
 
         //retornamos el ViewHolder que creamos abajo, clase interna, y entregamos la vista inflada
         //como return.
@@ -73,7 +74,7 @@ class UserAdapter(private val users:List<User>, private val listener: OnClickLis
     //elemento que queremos bindear, en este caso ItemUserBinding, es el binding generado para la
     //vista de Item User, que es el elemento a renderizar dentro del listado.
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
-        val binding = ItemUserBinding.bind(view)
+        val binding = ItemUserAltBinding.bind(view)
 
 
         /*dentro de la clase interna definimos el setListener para el root, se que en el

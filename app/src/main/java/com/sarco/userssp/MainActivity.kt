@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                 /*dentro del positive Button, se al presionarlo el valor del dato cambia a false*/
 
                 }
+                .setNeutralButton(getString(R.string.dialog_guest), null)
                 .show()
             /*si el usuario ya existe dentro de las shared preferences le damos la bienvenida
             * podemos rescatar su nombre desde las shared preferences*/
