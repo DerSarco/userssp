@@ -1,6 +1,7 @@
 package com.sarco.userssp
 
 import android.content.Context
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sarco.userssp.databinding.ActivityMainBinding
 /*la actividad que contiene el main activity en este caso, es donde se aloja la lista, por ende
 * debemos extender la actividad al OnClickListener definido por nosotros.*/
@@ -36,6 +38,24 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         //en un recurso string
         val isFirstTime = preferences.getBoolean(getString(R.string.sp_first_time), true)
         Log.i("SP: ", "${getString(R.string.sp_first_time)} = $isFirstTime")
+
+        //con esta función de preferences podemos insertar un dato dentro de shared preferences
+        //la función commit realiza el insert del dato de manera sincrona.
+
+        if(isFirstTime){
+
+            /*Creamos un Dialog para poder cambiar el valor del dato en Shared Preferences*/
+            MaterialAlertDialogBuilder(this, )
+                .setTitle(R.string.dialog_title)
+                .setPositiveButton(R.string.dialog_confirm) { dialogInterface, which ->
+                /*dentro del positive Button, se al presionarlo el valor del dato cambia a false*/
+                    preferences.edit().putBoolean(getString(R.string.sp_first_time), false).commit()
+                }
+                .setNegativeButton("Cancelar", null)
+                .show()
+
+
+        }
 
         //igualamos el adapter instanciado previamente, le entregamos un listado, el cual
         //es requerido por la clase adapter UserAdapter.
